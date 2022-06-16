@@ -100,7 +100,7 @@ int main()
         }
 
         // setMatrixZero(ip, n, m);
-        setMatrixZero2(ip, n, m);
+        setMatrixZero2(ip);
 
         cout << "Solution : " << endl;
         for (int i = 0; i < n; i++)

@@ -6,44 +6,42 @@ using namespace std;
 //     return a.first<b.first;
 // }
 
+void display(vector<vector<int>> &ip){
+
+        cout<<"Current values in ans : "<<endl;
+       for(int i=0;i<ip.size();i++){
+            cout<<ip[i][0]<<" "<<ip[i][1]<<endl;
+        }
+}
+
 vector<vector<int>> mergeOverlappingIntervals(vector<vector<int>> &ip)
 {
     sort(ip.begin(), ip.end());
     if (ip.size() <= 1)
         return ip;
 
+    vector<int> k;
+    k.push_back(ip[0][0]);
+    k.push_back(ip[0][1]);
+
     vector<vector<int>> ans;
-    stack<pair<int,int>> s;
-    s.push({ip[0][0],ip[0][1]});
-
-    // vector<int> k=*(ip.begin());
-
-    // ans.push_back(k);
+    ans.push_back(k);
 
     for (int i=1;i<ip.size();i++)
     {
-        // vector<int> lastValInAnsVec=*(ans.end());
-
-        // if (lastValInAnsVec[1] >= ip[i][0])
-        // {
-        //    lastValInAnsVec[1] = max(lastValInAnsVec[1], ip[i][0]);
-        // }
-        //    ans.push_back(ip[i]);
-    
-        if(s.top().second>=ip[i][0]){
-            s.top().second = max(ip[i][0],s.top().second);
+        // cout<<"Last interval : "<<ans[ans.size()-1][0]<<" "<<ans[ans.size()-1][1]<<endl;
+        // cout<<"Current interval : "<<ip[i][0]<<" "<<ip[i][1]<<endl;
+        if(ans[ans.size()-1][1]>=ip[i][0]){
+            
+            ans[ans.size()-1][1]=max(ans[ans.size()-1][1],ip[i][0]);
         }
         else{
-            s.push({ip[i][0],ip[i][1]});
+            vector<int> r=ip[i];
+            ans.push_back(r);
         }
-    }
 
-    while(s.size()){
-        vector<int> k;
-        k.push_back(s.top().first);
-        k.push_back(s.top().first);
-        ans.push_back(k);
-        s.pop();
+        // display(ans);
+        
     }
     return ans;
 }
@@ -64,10 +62,9 @@ int main()
 
         for (int i = 0; i < n; i++)
         {
+            vector<int> p;
             int val;
             cin >> val;
-            vector<int> p;
-
             p.push_back(val);
             cin >> val;
             p.push_back(val);
@@ -76,9 +73,8 @@ int main()
 
         vector<vector<int>> ans = mergeOverlappingIntervals(ip);
 
-        for (vector<int> p : ans)
-        {
-            cout << p[0] << " " << p[1] << endl;
+        for(int i=0;i<n;i++){
+            cout<<ans[i][0]<<" "<<ans[i][1]<<endl;
         }
     }
     return 0;
